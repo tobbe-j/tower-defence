@@ -1,0 +1,9 @@
+xx@xxxxxxx
+x0#0xxxxxx
+x0#0xxxxxx
+x0#######0
+xxx00000#0
+xxx0###0#0
+xxx0#0###0
+xxx0#0xxxx
+xxx0@0xxxx
