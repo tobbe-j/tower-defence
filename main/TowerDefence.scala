@@ -12,26 +12,26 @@ import processing.core.PImage
 import java.io.IOException
 
 class TowerDefence extends PApplet {
-  val srcDirPath = System.getProperty("user.dir") + "/src/"
+  val srcDirPath: String = System.getProperty("user.dir") + "/src/"
 
   //setup stuff
-  val maps = ParseMap.getMaps(srcDirPath + "maps/")
-  var towerSprites = Map[String, PImage]()
-  var enemySprites = Map[String, PImage]()
-  var projectileSprite = Array[PImage]()
-  val mapFile = ParseMap.parse(maps(0))
+  val maps: Array[String] = ParseMap.getMaps(srcDirPath + "maps/")
+  var towerSprites: Predef.Map[String, PImage] = Map[String, PImage]()
+  var enemySprites: Predef.Map[String, PImage] = Map[String, PImage]()
+  var projectileSprite: Array[PImage] = Array[PImage]()
+  val mapFile: Array[Array[Char]] = ParseMap.parse(maps(0))
   var difficulty: Difficulty = new Easy
   var current = new Game(difficulty, mapFile)
 
   //variables
-  val mapMenuSpace = 700 / maps.length
+  val mapMenuSpace: Int = 700 / maps.length
   var selectedSquare = new Location(0, 0)
   var menuOpen = true
   var optionsOpen = false
   var waveComing = false
 
-  def mapHeight = current.map.heigth
-  def mapWidth = current.map.width
+  def mapHeight: Int = current.map.heigth
+  def mapWidth: Int = current.map.width
 
   override def setup() {
     frameRate(30)
@@ -46,12 +46,11 @@ class TowerDefence extends PApplet {
         loadImage)
       projectileSprite = Array(loadImage(srcDirPath + "sprites/bang-explosion.png"))
     } catch {
-      case e: IOException => {
+      case e: IOException =>
         fill(255, 0, 0)
         rect(0, 0, 1000, 700)
         fill(255, 255, 255)
         text("Error loading sprites, press R to reset gam and try again", 400, 350)
-      }
     }
     menuOpen = true
     optionsOpen = false
@@ -90,12 +89,13 @@ class TowerDefence extends PApplet {
       }
       if (current.getLives <= 0 && !menuOpen) drawLoss()
     } catch {
-      case _: Throwable => {
+      case _: Throwable =>
         fill(255, 0, 0)
         rect(0, 0, 1000, 700)
         fill(255, 255, 255)
-        text("Error attacking or moving, press r to reset game", 400, 350)
-      }
+        textSize(20)
+        text("Error attacking or moving, press r to reset game", 350, 250)
+        textSize(40)
     }
   }
 
@@ -115,16 +115,17 @@ class TowerDefence extends PApplet {
         mouseSelectGame()
       }
     } catch {
-      case _: Throwable => {
+      case _: Throwable =>
         fill(255, 0, 0)
         rect(0, 0, 1000, 700)
         fill(255, 255, 255)
-        text("Error clicking around options or menu, press r to reset game", 400, 350)
-      }
+        textSize(20)
+        text("Error clicking around options or menu, press r to reset game", 350, 250)
+        textSize(40)
     }
   }
 
-  private def mouseSelectGame() = {
+  private def mouseSelectGame(): Unit = {
     val (squareX, squareY) = (mouseX / 50 - 1, (mouseY - 100) / 50 - 1)
     //Open menu and quit game
     if (mouseX > 800 && mouseY < 100) {
@@ -181,7 +182,7 @@ class TowerDefence extends PApplet {
     }
   }
 
-  private def mouseSelectMenu() = {
+  private def mouseSelectMenu(): Unit = {
     if (mouseX > 780 && mouseX < 980 && mouseY > 225 && mouseY < 280) {
       difficulty = new Hard
       drawDif(difficulty)
@@ -189,7 +190,7 @@ class TowerDefence extends PApplet {
       difficulty = new Easy
       drawDif(difficulty)
     } else if (mouseX < 250) {
-      val chosenMapNr = math.min((mouseY) / mapMenuSpace, maps.length - 1)
+      val chosenMapNr = math.min(mouseY / mapMenuSpace, maps.length - 1)
       current = new Game(difficulty, ParseMap.parse(maps(chosenMapNr)))
       drawGameBoard()
       drawGameMenu()
@@ -197,7 +198,7 @@ class TowerDefence extends PApplet {
     }
   }
 
-  private def drawGameBoard() = {
+  private def drawGameBoard(): Unit = {
     fill(255, 255, 255)
     rect(0, 100, 1000, 700)
     fill(200, 200, 200)
@@ -219,7 +220,7 @@ class TowerDefence extends PApplet {
     fill(0, 0, 0)
   }
 
-  private def drawOptionMenu(x: Int, y: Int) = {
+  private def drawOptionMenu(x: Int, y: Int): Unit = {
     fill(200, 200, 200)
     rect(200, 0, 600, 100)
     fill(0, 0, 0)
@@ -232,7 +233,7 @@ class TowerDefence extends PApplet {
     optionsOpen = true
   }
 
-  private def drawGameMenu() = {
+  private def drawGameMenu(): Unit = {
     fill(200, 200, 200)
     rect(200, 0, 600, 100)
     fill(0, 0, 0)
@@ -245,7 +246,7 @@ class TowerDefence extends PApplet {
     optionsOpen = false
   }
 
-  private def drawMenu() = {
+  private def drawMenu(): Unit = {
     fill(255, 255, 255)
     rect(0, 0, 250, 700)
     rect(750, 0, 250, 700)
@@ -261,7 +262,7 @@ class TowerDefence extends PApplet {
     textSize(40)
   }
 
-  private def drawDif(dif: Difficulty) = {
+  private def drawDif(dif: Difficulty): Unit = {
     textSize(30)
     if (dif.dif == "Hard") {
       fill(255, 255, 255)
@@ -280,7 +281,7 @@ class TowerDefence extends PApplet {
     textSize(40)
   }
 
-  private def drawMessage(message: String) = {
+  private def drawMessage(message: String): Unit = {
     fill(255, 255, 255)
     rect(200, 100, 600, 50)
     fill(0, 0, 0)
@@ -289,7 +290,7 @@ class TowerDefence extends PApplet {
     textSize(40)
   }
 
-  private def drawNewWave() = {
+  private def drawNewWave(): Unit = {
     fill(200, 200, 200)
     rect(0, 0, 200, 100)
     fill(0, 0, 0)
@@ -297,7 +298,7 @@ class TowerDefence extends PApplet {
     waveComing = false
   }
 
-  private def drawLoss() = {
+  private def drawLoss(): Unit = {
     difficulty = new Easy
     fill(255, 255, 255)
     rect(0, 0, 1000, 800)
@@ -311,23 +312,23 @@ class TowerDefence extends PApplet {
 
   }
 
-  private def drawTower(tower: Tower) = {
+  private def drawTower(tower: Tower): Unit = {
     image(towerSprites(srcDirPath + tower.imageID),
       (tower.location.x + 1) * 50,
       (tower.location.y + 1) * 50 + 100)
   }
 
-  private def drawEnemy(enemy: Enemy) = {
+  private def drawEnemy(enemy: Enemy): Unit = {
     image(enemySprites(srcDirPath + enemy.spriteID),
       (enemy.location.x + 1) * 50,
       (enemy.location.y + 1) * 50 + 100)
   }
 
-  private def drawProjectile(pro: Projectile) = {
+  private def drawProjectile(pro: Projectile): Unit = {
     image(projectileSprite.head, (pro.target.x + 1) * 50, (pro.target.y + 1) * 50 + 100)
   }
 
-  private def drawTile(square: Location) = {
+  private def drawTile(square: Location): Unit = {
     current.map.getTile(square) match {
       case SpawnPoint =>
         fill(200, 200, 200)

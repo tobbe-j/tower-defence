@@ -16,7 +16,7 @@ class Location(val y: Int, val x: Int) {
     }
   }
   
-  override def toString = {
+  override def toString: String = {
     "Location: " + x + " " + y
   }
   

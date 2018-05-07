@@ -63,8 +63,8 @@ class Game(difficulty: Difficulty, mapFile: Array[Array[Char]]) {
       x.location.x == target.x &&
         x.location.y == target.y
     }
-    if (!finishedEnemies.isEmpty) {
-      finishedEnemies.foreach(_.kill)
+    if (finishedEnemies.nonEmpty) {
+      finishedEnemies.foreach(_.kill())
       lives -= finishedEnemies.length
     }
   }

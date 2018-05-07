@@ -8,20 +8,18 @@ class Map(mapFile: Array[Array[Char]]) {
   val heigth = mapFile.length
   val width = mapFile(0).length
   
-  private val tiles: Array[Array[MapTile]] = mapFile.map( _.map { x => 
-    x match {
-      case '0' => new BuildableTile
-      case '#' => Path
-      case '@' => SpawnPoint
-      case _ => UnbuildableTile
-    }
+  private val tiles: Array[Array[MapTile]] = mapFile.map( _.map {
+    case '0' => new BuildableTile
+    case '#' => Path
+    case '@' => SpawnPoint
+    case _ => UnbuildableTile
   })
 
   def spawnPoint = {
     val a = for {
       y <- 0 until heigth
       x <- 0 until width
-      if (tiles(y)(x) == SpawnPoint)
+      if tiles(y)(x) == SpawnPoint
     } yield new Location(y, x)
     a.head
   }
@@ -30,7 +28,7 @@ class Map(mapFile: Array[Array[Char]]) {
     val a = for {
       y <- 0 until heigth
       x <- 0 until width
-      if (tiles(y)(x) == SpawnPoint)
+      if tiles(y)(x) == SpawnPoint
     } yield new Location(y, x)
     a.last
   }

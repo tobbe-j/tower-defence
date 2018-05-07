@@ -6,7 +6,6 @@ import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.File
 import processing.core.PImage
-import processing.core.PApplet
 
 object ParseMap {
   def parse(dir: String): Array[Array[Char]] = {
@@ -21,7 +20,6 @@ object ParseMap {
       case e: FileNotFoundException => println("file not found " + dir)
       case e: IOException => println("IO exception")
     }
-    println(res.length, res(0).length)
     res.toArray
   }
   

@@ -1,6 +1,5 @@
 package enemies
 
-import enemies._
 import map._
 import main._
 

@@ -1,6 +1,5 @@
 package towers
 
-import processing.core.PImage
 import enemies._
 import main._
 import scala.collection.mutable.Buffer
@@ -20,7 +19,7 @@ abstract class Tower(val location: Location) {
   var target: Option[Enemy] = None
   
   def getTarget(enemies: Buffer[Enemy]) = {
-    if (!enemies.isEmpty) {
+    if (enemies.nonEmpty) {
       //println(enemies.length)
       target = Option(enemies.map(x => location.distanceTo(x.location) )
                              .zip(enemies)
